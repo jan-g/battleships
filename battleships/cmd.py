@@ -1,13 +1,26 @@
 from battleships.board import board
 
-def main():
-    player1 = board()
-    player2 = board()
 
-    print("PLAYER1 ENTER YOUR SHIPS;")
+ships = [["Carrier"],
+		["Battleship"],
+		["Cruiser"],
+		["Submarine"],
+		["Destroyer"]]
+
+def main():
+    player1 = get_ships("player1")
+    player2 = get_ships("player1")
+
+
+
+def get_ships(name):
+    print("{}".format(name))
+    player = board()
     for ship in ships:
-        location = input("nmmmm")
+        locationx = input("enter x position of {}".format(ship))
+        locationy = input("enter y position of {}".format(ship))
         # get x and y from here
-        x = ..
-        y = ...
-        player1.add_ship(x, y)
+        x = int(locationx)
+        y = int(locationy)
+        player.add_ship(x, y)
+        return player
