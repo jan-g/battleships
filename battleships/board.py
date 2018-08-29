@@ -1,10 +1,6 @@
-import numpy as np
-
-
 class board ():
 
     def __init__(self):
-        self.grid = np.zeros((10,10),dtype=int)
         self.ship = []
 
     def add_ship (self,x,y):
@@ -16,4 +12,13 @@ class board ():
     def defeated(self):
         return False
 
-
+    def display(self):
+        print("  0123456789")
+        for y in range(10):
+            line = ""
+            for x in range(10):
+                if (x, y) in self.ship:
+                    line += "S"
+                else:
+                    line += "."
+            print(y, line)
