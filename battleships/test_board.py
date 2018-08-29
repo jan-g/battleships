@@ -8,4 +8,4 @@ def test_board():
 
     b.display()
 
-    assert False
+    assert not b.defeated()
