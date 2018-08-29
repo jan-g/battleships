@@ -2,12 +2,19 @@ class board ():
 
     def __init__(self):
         self.ship = []
+        self.sunk = []
 
     def add_ship (self,x,y):
         self.ship.append((x,y))
 
     def potshot(self,x,y):
-        pass
+        try:
+            self.ship.remove((x,y))
+            self.sunk.append((x,y))
+            return True
+        except:
+            return False # this is a miss
+
 
     def defeated(self):
         return len(self.ship) == 0
