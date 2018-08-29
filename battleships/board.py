@@ -26,6 +26,8 @@ class board ():
             for x in range(10):
                 if (x, y) in self.ship:
                     line += "S"
+                elif (x, y) in self.sunk:
+                    line += "X"
                 else:
                     line += "."
             print(y, line)

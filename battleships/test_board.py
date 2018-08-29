@@ -16,7 +16,7 @@ def test_hit():
     b.add_ship(5, 5)
 
     assert b.potshot(5, 5)
-
+    b.display()
     assert b.defeated()
 
 def test_miss():
@@ -25,4 +25,5 @@ def test_miss():
 
     assert not b.potshot(2,2) # we want this to return true i.e. pass
     assert not b.defeated() # should return true i.e. pass
+
 
