@@ -11,3 +11,8 @@ def main():
         x = ..
         y = ...
         player1.add_ship(x, y)
+
+
+
+
+    player1.display()
