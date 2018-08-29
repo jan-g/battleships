@@ -1,11 +1,13 @@
 from board import board
 
 
-ships = ["Carrier",
+"""ships = ["Carrier",
 		"Battleship",
 		"Cruiser",
 		"Submarine",
-		"Destroyer"]
+		"Destroyer"]"""
+
+ships = ["Carrier"]
 
 
 def get_ships(name):
@@ -22,11 +24,30 @@ def get_ships(name):
     return player
 
 
+
+
 def main():
     player1 = get_ships("Player 1")
     player2 = get_ships("Player 2")
-    print(player1)
-    print(player2)
+
+    player1_turn = True
+    winner = False
+    while winner == False:
+        current_player = player1
+        if player1_turn:
+            print("Player 1, your go")
+            current_player = player1
+        else:
+            print("Player 2, your go")
+            current_player = player2
+
+        x = int(input("Enter x"))
+        y = int(input("Enter y"))
+
+        current_player.potshot(x,y)
+
+        player1_turn = not player1_turn
+		
 
 if __name__ == "__main__":
 	main()
