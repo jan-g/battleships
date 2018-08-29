@@ -10,7 +10,7 @@ class board ():
         pass
 
     def defeated(self):
-        return False
+        return len(self.ship) == 0
 
     def display(self):
         print("  0123456789")
