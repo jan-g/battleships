@@ -33,18 +33,26 @@ def main():
     player1_turn = True
     winner = False
     while winner == False:
-        current_player = player1
         if player1_turn:
             print("Player 1, your go")
             current_player = player1
+            player_name = "Player 1"
+            other_player = player2
         else:
             print("Player 2, your go")
             current_player = player2
+            player_name = "Player 2"
+            other_player = player1
 
         x = int(input("Enter x"))
         y = int(input("Enter y"))
 
-        current_player.potshot(x,y)
+        other_player.potshot(x,y)
+
+        if other_player.defeated():
+            winner = True
+            other_player.display()
+            print("The winner is {}".format(player_name))
 
         player1_turn = not player1_turn
 		
