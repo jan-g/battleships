@@ -1,4 +1,4 @@
-from board import board
+from battleships.board import board
 
 
 """ships = ["Carrier",
