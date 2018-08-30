@@ -1,61 +1,84 @@
-from battleships.board import board
+import sys
+from battleships.board import Board, parse_ship_location, parse_bomb_location
 
 
-"""ships = ["Carrier",
-		"Battleship",
-		"Cruiser",
-		"Submarine",
-		"Destroyer"]"""
-
-ships = ["Carrier"]
+ships = [("Carrier", 5),
+         ("Battleship", 4),
+         ("Cruiser", 3),
+         ("Submarine",2),
+         ("Destroyer", 2)]
 
 
-def get_ships(name):
+def get_ships(name, guess_method):
     print("{} pick your ships!".format(name))
-    player = board()
-    for ship in ships:
-        locationx = input("enter x position of {}: ".format(ship))
-        locationy = input("enter y position of {}: ".format(ship))
-        # get x and y from here
-        x = int(locationx)
-        y = int(locationy)
-        player.add_ship(x, y)
+    print("Use: R C D for input (R: row; C: column; D = A for across, D for down)")
+    player = Board()
+    for ship, size in ships:
+        while True:
+            print()
+            player.display()
+            location = input("enter position of {}: ".format(ship))
+            # We want three characters: the y-coord, the x-coord and an A or a D.
+            try:
+                x, y, dx, dy = parse_ship_location(location)
+            except:
+                print("Use: R C D for input (R: row; C: column; D = A for across, D for down)")
+                continue
 
+            # Try to place the ship
+            try:
+                player.add_ship(x, y, dx, dy, size)
+            except:
+                print("That ship can't go there!")
+                continue
+
+            break
+
+    player.name = name
+    player.guess = guess_method
     return player
 
 
+def get_human_move():
+    while True:
+        try:
+            x, y = parse_bomb_location(input("your guess?"))
+            return x, y
+        except KeyboardInterrupt:
+            sys.exit(0)
+        except:
+            pass
 
 
 def main():
-    player1 = get_ships("Player 1")
-    player2 = get_ships("Player 2")
+    player1 = get_ships("Player 1", get_human_move)
+    player2 = get_ships("Player 2", get_human_move)
 
-    player1_turn = True
-    winner = False
-    while winner == False:
-        if player1_turn:
-            print("Player 1, your go")
-            current_player = player1
-            player_name = "Player 1"
-            other_player = player2
+    player, other = (player2, player1)
+    while not other.defeated():
+        player, other = other, player
+
+        print("{}. your turn".format(player.name))
+        print()
+        print("Your board:")
+        player.display()
+
+        print()
+        print("Their board:")
+        other.display_other()
+
+        x, y = player.guess()
+
+        result = other.potshot(x, y)
+        if result == Board.MISS:
+            print("Splash!")
+        elif result == Board.NEAR:
+            print("KERSPLOOSH!!")
         else:
-            print("Player 2, your go")
-            current_player = player2
-            player_name = "Player 2"
-            other_player = player1
+            print("BOOM!!!")
 
-        x = int(input("Enter x"))
-        y = int(input("Enter y"))
+    print("The winner is {}".format(player.name))
 
-        other_player.potshot(x,y)
-
-        if other_player.defeated():
-            winner = True
-            other_player.display()
-            print("The winner is {}".format(player_name))
-
-        player1_turn = not player1_turn
-		
 
 if __name__ == "__main__":
-	main()
+    main()
